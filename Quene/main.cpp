@@ -1,47 +1,109 @@
-#include <iostream>
+#include<iostream>
 
+#define ok 1
+#define error 0
+
+typedef int status;
+typedef char selemtype;
 using namespace std;
-#define MAXSIZE 50    //å®šä¹‰é˜Ÿåˆ—ä¸­å…ƒç´ çš„æœ€å¤§ä¸ªæ•°
-typedef int ElemType;
 
+//-------------¶ÓÁÐµÄÁ´Ê½´æ´¢½á¹¹--------------
+typedef struct qnode {
+    selemtype data;
+    struct qnode *next;
+} qnode, *queue;
 typedef struct {
-    ElemType data[MAXSIZE];    //å­˜æ”¾é˜Ÿåˆ—å…ƒç´ 
-    int front, rear;
-} SqQueue;
+    queue front;        //¶ÓÍ·Ö¸Õë
+    queue rear;         //¶ÓÎ²Ö¸Õë
+} link;
 
-void InitQueue(SqQueue *&Q)  //åˆå§‹åŒ–é˜Ÿåˆ—ï¼Œæž„é€ ä¸€ä¸ªç©ºé˜Ÿåˆ—Q
-{
-    Q = (SqQueue *) malloc(sizeof(SqQueue));
-    Q->front = Q->rear == 0;
+//Á´¶ÓµÄ³õÊ¼»¯
+status csh(link &L) {
+    L.front = L.rear = new qnode;            //Éú³ÉÐÂ½áµã×÷ÎªÍ·½áµã£¬¶ÓÍ·ºÍ¶ÓÎ²Ö¸ÕëÖ¸Ïò´Ë½áµã
+    L.front->next = NULL;                  //Í·½áµãµÄÖ¸ÕëÓòÖÃÁã
+    return ok;
 }
 
-bool QueueEmpty(SqQueue Q)//åˆ¤é˜Ÿåˆ—ç©ºï¼Œè‹¥é˜Ÿåˆ—Qä¸ºç©ºè¿”å›žtrueï¼Œå¦åˆ™è¿”å›žfalseã€‚
+//Á´¶ÓµÄÈë¶Ó
+status rd(link &L, selemtype &e)            //²åÈëÔªËØeÎªLµÄÐÂ¶ÓÎ²ÔªËØ
 {
-    return (Q.rear == Q.front);
+    queue p;
+    p = new qnode;
+    p->data = e;
+    p->next = NULL;
+    L.rear->next = p;
+    L.rear = p;
+    return ok;
 }
 
-bool EnQueue(SqQueue *&Q, int X)//å…¥é˜Ÿï¼Œè‹¥é˜Ÿåˆ—Qæœªæ»¡ï¼Œå°†xåŠ å…¥ï¼Œä½¿ä¹‹æˆä¸ºæ–°çš„é˜Ÿå°¾ã€‚
+//Á´¶ÓµÄ³ö¶Ó
+status cd(link &L, selemtype &e)           //É¾³ýLµÄ¶ÓÍ·ÔªËØ£¬ÓÃe·µ»ØÆäÖµ
 {
-    if ((Q->rear + 1) % MAXSIZE == Q->front) return false;
-    Q->rear = (Q->rear + 1) % MAXSIZE;
-    Q->data[Q->rear] = X;
-    return true;
+    queue p;
+    if (L.front == L.rear)
+        return error;
+    p = L.front->next;
+    e = p->data;
+    L.front->next = p->next;
+    if (L.rear == p)
+        L.rear = L.front;
+    delete p;
+    return ok;
 }
 
-bool DeQueue(SqQueue *&Q, int &x)//è‹¥é˜Ÿåˆ—Qéžç©ºï¼Œåˆ é™¤é˜Ÿå¤´å…ƒç´ ï¼Œå¹¶ç”¨xè¿”å›žã€‚
-{
-    if (Q->rear == Q->front) return false;
-    Q->front = (Q->front + 1) % MAXSIZE;
-    x = Q->data[Q->front];
-    return true;
-}
-
-//æ±‚é˜Ÿåˆ—ä¸­çš„å…ƒç´ ä¸ªæ•°
-int Count(SqQueue *q) {
-    return (q->rear - q->front + MAXSIZE) % MAXSIZE;
+//È¡Á´¶ÓµÄ¶ÓÍ·ÔªËØ
+selemtype qdt(link &L) {
+    if (L.front != L.rear)               //¶ÓÁÐ·Ç¿Õ
+        return L.front->next->data;
 }
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    int choose, i, n;
+    link L;
+    selemtype e, a;
+
+    cout << "1. ³õÊ¼»¯" << endl;
+    cout << "2. Èë¶Ó" << endl;
+    cout << "3. ¶Á¶ÓÍ·ÔªËØ" << endl;
+    cout << "4. ³ö¶Ó" << endl;
+    cout << "0. ÍË³ö" << endl;
+
+    choose = 1;
+    while (choose) {
+        cout << "ÇëÑ¡Ôñ£º" << endl;
+        cin >> choose;
+        switch (choose) {
+            case 1:
+                if (csh(L))
+                    cout << "Á´Ê½¶ÓÁÐ³õÊ¼»¯³É¹¦£¡" << endl;
+                else
+                    cout << "Á´Ê½¶ÓÁÐ³õÊ¼»¯Ê§°Ü£¡" << endl;
+                break;
+            case 2:
+                cout << "ÇëÊäÈëÏëÈë¶ÓµÄÔªËØ¸öÊý£º" << endl;
+                cin >> n;
+                cout << "ÇëÊäÈëÏëÈë¶ÓµÄÔªËØ£º" << endl;
+                for (i = 0; i < n; i++) {
+                    cin >> e;
+                    rd(L, e);
+                }
+                cout << "Èë¶Ó³É¹¦£¡" << endl;
+                break;
+            case 3:
+                if (qdt(L))
+                    cout << "¶ÓÍ·ÔªËØÎª£º" << qdt(L) << endl;
+                else
+                    cout << "¶ÓÁÐÖÐÎÞÔªËØ£¬ÇëÖØÐÂÑ¡Ôñ£¡" << endl;
+                break;
+            case 4:
+                cout << "ÒÀ´Îµ¯³öµÄ¶ÓÍ·ÔªËØÎª£º" << endl;
+                while (cd(L, a)) {
+                    cout << a << " ";
+                }
+                cout << endl;
+                break;
+        }
+    }
     return 0;
 }
+
