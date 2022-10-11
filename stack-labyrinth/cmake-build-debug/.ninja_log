@@ -1,0 +1,7 @@
+# ninja log v5
+1	430	6870000823042609	CMakeFiles/stack_labyrinth.dir/main.cpp.obj	b3581363228bbb01
+433	589	6870000824740007	stack_labyrinth.exe	4d1d5873b3fc58e4
+3	144	6870184948447004	CMakeFiles/stack_labyrinth.dir/main.cpp.obj	b3581363228bbb01
+144	1062	6870184957237815	stack_labyrinth.exe	4d1d5873b3fc58e4
+17	1091	6871903871408886	CMakeFiles/stack_labyrinth.dir/main.cpp.obj	b3581363228bbb01
+1092	2406	6871903884563910	stack_labyrinth.exe	4d1d5873b3fc58e4

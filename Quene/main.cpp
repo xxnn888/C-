@@ -1,109 +1,140 @@
-#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
 
-#define ok 1
-#define error 0
+typedef char DataType;
+struct Node {
+    DataType data;
+    struct Node *next;
+};
+typedef struct Node *PNode;
+typedef struct Node *LinkStack;
+struct Queue {
+    PNode f;
+    PNode r;
+};
+typedef struct Queue *LinkQueue;
 
-typedef int status;
-typedef char selemtype;
-using namespace std;
-
-//-------------队列的链式存储结构--------------
-typedef struct qnode {
-    selemtype data;
-    struct qnode *next;
-} qnode, *queue;
-typedef struct {
-    queue front;        //队头指针
-    queue rear;         //队尾指针
-} link;
-
-//链队的初始化
-status csh(link &L) {
-    L.front = L.rear = new qnode;            //生成新结点作为头结点，队头和队尾指针指向此结点
-    L.front->next = NULL;                  //头结点的指针域置零
-    return ok;
+LinkStack SetNullStack_Link() {
+    LinkStack top = (LinkStack) malloc(sizeof(struct Node));
+    if (top != NULL) top->next = NULL;
+    else printf("Alloc failure");
+    return top;
 }
 
-//链队的入队
-status rd(link &L, selemtype &e)            //插入元素e为L的新队尾元素
-{
-    queue p;
-    p = new qnode;
-    p->data = e;
-    p->next = NULL;
-    L.rear->next = p;
-    L.rear = p;
-    return ok;
+int IsNullStack_link(LinkStack top) {
+    if (top->next == NULL)
+        return 1;
+    else
+        return 0;
 }
 
-//链队的出队
-status cd(link &L, selemtype &e)           //删除L的队头元素，用e返回其值
-{
-    queue p;
-    if (L.front == L.rear)
-        return error;
-    p = L.front->next;
-    e = p->data;
-    L.front->next = p->next;
-    if (L.rear == p)
-        L.rear = L.front;
-    delete p;
-    return ok;
+void Push_link(LinkStack top, DataType x) {
+    PNode p;
+    p = (PNode) malloc(sizeof(struct Node));
+    if (p == NULL)
+        printf("Alloc failure");
+    else {
+        p->data = x;
+        p->next = top->next;
+        top->next = p;
+    }
 }
 
-//取链队的队头元素
-selemtype qdt(link &L) {
-    if (L.front != L.rear)               //队列非空
-        return L.front->next->data;
+void Pop_link(LinkStack top) {
+    PNode p;
+    if (top->next == NULL)
+        printf("it is empty stack!");
+    else {
+        p = top->next;
+        top->next = p->next;
+        free(p);
+    }
+}
+
+DataType Top_link(LinkStack top) {
+    if (top->next == NULL) {
+        printf("It is empty stack!");
+        return 0;
+    } else
+        return top->next->data;
+}
+
+LinkQueue SetNullQueue_Link() {
+    LinkQueue lqueue;
+    lqueue = (LinkQueue) malloc(sizeof(struct Queue));
+    if (lqueue != NULL) {
+        lqueue->f = NULL;
+        lqueue->r = NULL;
+    } else
+        printf("Alloc failure! \n");
+    return lqueue;
+}
+
+int IsNullQueue_link(LinkQueue lqueue) {
+    return (lqueue->f == NULL);
+}
+
+void EnQueue_link(LinkQueue lqueue, DataType x) {
+    PNode p;
+    p = (PNode) malloc(sizeof(struct Node));
+    if (p == NULL)
+        printf("Alloc failure!");
+    else {
+        p->data = x;
+        p->next = NULL;
+        if (lqueue->f == NULL) {
+            lqueue->f = p;
+            lqueue->r = p;
+        } else {
+            lqueue->r->next = p;
+            lqueue->r = p;
+        }
+    }
+}
+
+void DeQueue_link(LinkQueue lqueue) {
+    struct Node *p;
+    if (lqueue->f == NULL)
+        printf("It is empty queue!\n ");
+    else {
+        p = lqueue->f;
+        lqueue->f = lqueue->f->next;
+        free(p);
+    }
+}
+
+DataType FrontQueue_link(LinkQueue lqueue) {
+    if (lqueue->f == NULL) {
+        printf("It is empty queue!\n");
+        return 0;
+    } else
+        return (lqueue->f->data);
 }
 
 int main() {
-    int choose, i, n;
-    link L;
-    selemtype e, a;
-
-    cout << "1. 初始化" << endl;
-    cout << "2. 入队" << endl;
-    cout << "3. 读队头元素" << endl;
-    cout << "4. 出队" << endl;
-    cout << "0. 退出" << endl;
-
-    choose = 1;
-    while (choose) {
-        cout << "请选择：" << endl;
-        cin >> choose;
-        switch (choose) {
-            case 1:
-                if (csh(L))
-                    cout << "链式队列初始化成功！" << endl;
-                else
-                    cout << "链式队列初始化失败！" << endl;
-                break;
-            case 2:
-                cout << "请输入想入队的元素个数：" << endl;
-                cin >> n;
-                cout << "请输入想入队的元素：" << endl;
-                for (i = 0; i < n; i++) {
-                    cin >> e;
-                    rd(L, e);
-                }
-                cout << "入队成功！" << endl;
-                break;
-            case 3:
-                if (qdt(L))
-                    cout << "队头元素为：" << qdt(L) << endl;
-                else
-                    cout << "队列中无元素，请重新选择！" << endl;
-                break;
-            case 4:
-                cout << "依次弹出的队头元素为：" << endl;
-                while (cd(L, a)) {
-                    cout << a << " ";
-                }
-                cout << endl;
-                break;
+    DataType ch;
+    int flag;
+    LinkStack stack_pal = SetNullStack_Link();
+    LinkQueue queue_pal = SetNullQueue_Link();
+    ch = getchar();
+    while (ch != '#') {
+        Push_link(stack_pal, ch);
+        EnQueue_link(queue_pal, ch);
+        ch = getchar();
+    }
+    flag = 1;
+    while (!IsNullStack_link(stack_pal)) {
+        if (Top_link(stack_pal) != FrontQueue_link(queue_pal)) {  //(Pop(stack1)!=DeQueue(linkQueue1))
+            flag = 0;
+            break;
+        } else {
+            flag = 1;
+            break;
         }
     }
+    if (flag)
+        printf("this is palindromic");
+    else
+        printf("this is NOT palindromic");
     return 0;
 }
-
