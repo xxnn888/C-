@@ -22,7 +22,7 @@ typedef struct {
 } link;
 
 //链队的初始化
-status csh(link &L) {
+bool csh(link &L) {
     L.front = L.rear = new qnode;            //生成新结点作为头结点，队头和队尾指针指向此结点
     L.front->next = NULL;                  //头结点的指针域置零
     return ok;

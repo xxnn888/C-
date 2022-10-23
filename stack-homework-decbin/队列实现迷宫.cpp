@@ -9,13 +9,13 @@
 #define N 4
 
 typedef struct {
-    int i, j;    //¼ÇÂ¼·½¿éµÄĞĞÊıÓëÁĞÊı
-    int pre;    //¼ÇÂ¼±¾Â·¾¶ÉÏÒ»·½¿éÔÚ¶ÓÁĞÖĞµÄÏÂ±ê
+    int i, j;    //è®°å½•æ–¹å—çš„è¡Œæ•°ä¸åˆ—æ•°
+    int pre;    //è®°å½•æœ¬è·¯å¾„ä¸Šä¸€æ–¹å—åœ¨é˜Ÿåˆ—ä¸­çš„ä¸‹æ ‡
 } Box;
 
 typedef struct {
     Box data[1000];
-    int front, rear;    //¶ÓÍ·¶ÓÎ²Ö¸Õë
+    int front, rear;    //é˜Ÿå¤´é˜Ÿå°¾æŒ‡é’ˆ
 } Que;
 
 int mg[M + 2][N + 2] =
@@ -55,20 +55,20 @@ bool Pop(Que *&qu, Box &e) {
 
 void print(Que *&qu, int k) {
     int j;
-    //·´ÏòÑ°ÕÒ×î¶ÌÂ·¾¶
+    //åå‘å¯»æ‰¾æœ€çŸ­è·¯å¾„
     while (k != -1) {
         j = k;
         k = qu->data[k].pre;
-        qu->data[j].pre = -1;    //½«ÕÒµ½µÄÂ·¾¶ÉÏµÄ·½¿éµÄpre³ÉÔ±ÖÃÎª-1
+        qu->data[j].pre = -1;    //å°†æ‰¾åˆ°çš„è·¯å¾„ä¸Šçš„æ–¹å—çš„preæˆå‘˜ç½®ä¸º-1
     }
 
     k = 0;
     int ns = 0;
-    while (k < 1000) {    //±éÀúÕû¸ö¶ÓÁĞÊä³öpre³ÉÔ±Îª-1µÄ·½¿é×ø±ê
+    while (k < 1000) {    //éå†æ•´ä¸ªé˜Ÿåˆ—è¾“å‡ºpreæˆå‘˜ä¸º-1çš„æ–¹å—åæ ‡
         if (qu->data[k].pre == -1) {
             ns++;
             printf("\t(%d,%d)", qu->data[k].i, qu->data[k].j);
-            if (ns % 5 == 0) printf("\n");    //Ã¿Êä³ö5¸öÔªËØºó»»Ò»ĞĞ
+            if (ns % 5 == 0) printf("\n");    //æ¯è¾“å‡º5ä¸ªå…ƒç´ åæ¢ä¸€è¡Œ
         }
         k++;
     }
@@ -83,24 +83,24 @@ bool mgpath1(int xi, int yi, int xe, int ye) {
     Box e;
     int i, j, pre;
     Que *qu;
-    InitQue(qu);    //³õÊ¼»¯¶ÓÁĞ
+    InitQue(qu);    //åˆå§‹åŒ–é˜Ÿåˆ—
 
-    //ÆğµãÈë¶Ó
+    //èµ·ç‚¹å…¥é˜Ÿ
     e.i = xi, e.j = yi, e.pre = -1;
     mg[xi][yi] = -1;
     Push(qu, e);
 
-    while (!EmptyQue(qu)) {    //¶ÓÁĞ²»¿ÕÔòÑ­»·
-        Pop(qu, e);    //¶ÓÊ×ÔªËØ³ö¶Ó
-        i = e.i, j = e.j, pre = e.pre;    //¼ÇÂ¼µ±Ç°¶ÓÊ×ÔªËØµÄ·½¿éÀà
-        if (i == xe && j == ye) {    //¶ÓÊ×ÔªËØÎª³ö¿ÚÔòÊä³öÂ·¾¶
-            print(qu, qu->front);    //Êä³öÂ·¾¶º¯Êı
+    while (!EmptyQue(qu)) {    //é˜Ÿåˆ—ä¸ç©ºåˆ™å¾ªç¯
+        Pop(qu, e);    //é˜Ÿé¦–å…ƒç´ å‡ºé˜Ÿ
+        i = e.i, j = e.j, pre = e.pre;    //è®°å½•å½“å‰é˜Ÿé¦–å…ƒç´ çš„æ–¹å—ç±»
+        if (i == xe && j == ye) {    //é˜Ÿé¦–å…ƒç´ ä¸ºå‡ºå£åˆ™è¾“å‡ºè·¯å¾„
+            print(qu, qu->front);    //è¾“å‡ºè·¯å¾„å‡½æ•°
             return true;
         }
 
         int d = -1;
         int in, jn;
-        while (d < 4) {    //Ã¿¸ö·½Î»½øĞĞÊÔÌ½
+        while (d < 4) {    //æ¯ä¸ªæ–¹ä½è¿›è¡Œè¯•æ¢
             d++;
             switch (d) {
                 case 0: {
@@ -123,20 +123,20 @@ bool mgpath1(int xi, int yi, int xe, int ye) {
                     break;
                 }
             }
-            if (mg[in][jn] == 0) {    //ÕÒµ½¿É×ßÏàÁÚ·½¿é(in,jn)¾ÍÈë¶Ó
+            if (mg[in][jn] == 0) {    //æ‰¾åˆ°å¯èµ°ç›¸é‚»æ–¹å—(in,jn)å°±å…¥é˜Ÿ
                 e.i = in, e.j = jn, e.pre = qu->front;
                 Push(qu, e);
-                mg[in][jn] = -1;    //½«Æä¸³Öµ-1£¬ÒÔ±ÜÃâÀ´»ØÖØ¸´ËÑË÷
+                mg[in][jn] = -1;    //å°†å…¶èµ‹å€¼-1ï¼Œä»¥é¿å…æ¥å›é‡å¤æœç´¢
             }
         }
     }
-    DestroyQue(qu);    //Ïú»Ù¶ÓÁĞ
+    DestroyQue(qu);    //é”€æ¯é˜Ÿåˆ—
     return false;
 }
 
 int main() {
     if (!mgpath1(1, 1, M, N))
-        printf("´ËÃÔ¹¬ÎÊÌâÎŞ½â");
+        printf("æ­¤è¿·å®«é—®é¢˜æ— è§£");
 
     return 0;
 }
