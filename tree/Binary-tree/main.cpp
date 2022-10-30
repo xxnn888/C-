@@ -15,7 +15,7 @@ void CreateBTree(BTNode *&b, const char *str) {
     char ch;
     b = nullptr;
     ch = str[j];
-    while (ch == '\0') {
+    while (ch != '\0') {
         switch (ch) {
             case '(':
                 top++;
@@ -111,7 +111,6 @@ void DispBtree(BTNode *b) {
 int main() {
     BTNode *b;
     CreateBTree(b, "A(B(D(,G)),G)),C(E,F))");
-
     DispBtree(b);
     return 0;
 }

@@ -1,0 +1,21 @@
+# ninja log v5
+0	1172	6884004639269500	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+1173	1711	6884004644227477	Binary_tree_traverse.exe	cb67a06b808de0a0
+2	159	6884008136915104	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+159	335	6884008138425100	Binary_tree_traverse.exe	cb67a06b808de0a0
+2	178	6884009996354015	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+2	167	6884010344851904	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+2	152	6884010684377993	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+152	287	6884010685919652	Binary_tree_traverse.exe	cb67a06b808de0a0
+3	195	6884010943878566	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+195	342	6884010945292464	Binary_tree_traverse.exe	cb67a06b808de0a0
+2	111	6884011688838956	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+112	231	6884011689955309	Binary_tree_traverse.exe	cb67a06b808de0a0
+2	127	6884011888414829	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+127	298	6884011889630620	Binary_tree_traverse.exe	cb67a06b808de0a0
+2	123	6884012573417477	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+123	250	6884012574608993	Binary_tree_traverse.exe	cb67a06b808de0a0
+3	196	6884012956988960	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+197	377	6884012958818970	Binary_tree_traverse.exe	cb67a06b808de0a0
+2	124	6884088311987568	CMakeFiles/Binary_tree_traverse.dir/main.cpp.obj	1915cad991a385d2
+124	456	6884088314985688	Binary_tree_traverse.exe	cb67a06b808de0a0
