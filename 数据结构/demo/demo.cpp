@@ -1,115 +1,66 @@
-//
-// Created by 15218 on 2022/9/7.
-//
-#include <iostream>
-#include <string>
-#include <utility>
-
-using namespace std;
-#define MaxSize 20
-typedef int EleType;
-typedef struct {
-    EleType data[MaxSize];
-    int length;
-} Set;
-
-void cset(Set &s, const int a[], int n) {
-    for (int i = 0; i < n; ++i) {
-        s.data[i] = a[i];
-        s.length = n;
-    }
-}
-
-void dispset(Set s) {
-    for (int i = 0; i < s.length; ++i) {
-        cout << s.data[i];
-        cout << endl;
-    }
-}
-
-bool inset(Set s, int c) {
-    for (int i = 0; i < s.length; ++i) {
-        if (s.data[i] == c) {
-            return true;
-        }
-    }
-    return false;
-}
+#include <cstdio>
+#include <malloc.h>
 
 
-void add(Set s1, Set s2, Set &s3) {
-    for (int j = 0; j < s1.length; ++j) {
-        s3.data[j] = s1.data[j];
-        s3.length = s1.length;
-    }
-    for (int j = 0; j < s2.length; ++j) {
-        if (!inset(s1, s2.data[j])) {
-            s3.data[s3.length] = s2.data[j];
-            s3.length++;
-        }
-    }
-}
+typedef struct node {
+    int data;
+    struct node *Lson, *Rson;
+} Bnode, *Bptr;
 
-void sub(Set s1, Set s2, Set &s3) {
-    s3.length = 0;
-    for (int i = 0; i < s1.length; ++i) {
-        if (!inset(s2, s1.data[i])) {
-            s3.data[s3.length] = s1.data[i];
-            s3.length++;
-        }
-    }
-}
+Bptr creat();
 
-void intersection(Set s1, Set s2, Set &s3) {
-    s3.length = 0;
-    for (int i = 0; i < s1.length; ++i) {
-        if (inset(s2, s1.data[i])) {
-            s3.data[s3.length] = s1.data[i];
-            s3.length++;
-        }
-    }
-}
-
-class person {
-public:
-    void initperson(string s, int ag, string add) {
-        this->address = std::move(add);
-        this->age = ag;
-        this->name = std::move(s);
-    }
-
-    void showperson() {
-        cout << this->name << this->age << this->address;
-    }
-
-private:
-    string name;
-    int age{};
-    string address;
-};
+void preorder(Bptr p);//先序遍历
+void inorder(Bptr p);//中序遍历
+void postorder(Bptr p);//后序遍历
 
 int main() {
-    int a[] = {1, 4, 2, 6, 8};
-    int b[] = {2, 5, 3, 6};
-    Set s1, s2, s3;
-    cset(s1, a, 5);
-    cset(s2, b, 4);
-    cout << "集合1   :" << endl;
-    dispset(s1);
-    cout << "集合2   :" << endl;
-    dispset(s2);
-
-//    person p[10]; //比如我创建的类为person 直接定义10个对象
-//    for (int i = 0; i < 10; ++i) {
-//        string name;
-//        int age;
-//        string address;
-//        cin >> name >> age >> address;
-//        p[i].initperson(name, age, address);
-//        p[i].showperson();
-//    }
-
+    Bptr root = nullptr;
+    root = creat();
+    preorder(root);
+    printf("\n");
+    inorder(root);
+    printf("\n");
+    postorder(root);
     return 0;
-
 }
 
+/* 请在这里填写答案 */
+Bptr creat() {
+    int a, b, c;
+    scanf("%d %d %d", &a, &b, &c);
+    Bnode *p1 = (Bnode *) malloc(sizeof(Bnode));;
+    Bnode *p2 = (Bnode *) malloc(sizeof(Bnode));
+    Bnode *p3 = (Bnode *) malloc(sizeof(Bnode));
+    p1->data = a;
+    p2->data = b;
+    p2->Lson = p2->Rson = NULL;
+    p3->data = c;
+    p3->Lson = p3->Rson = NULL;
+    p1->Lson = p2;
+    p1->Rson = p3;
+    return p1;
+}
+
+void preorder(Bptr p) {
+    if (p != NULL) {
+        printf("%d", p->data);
+        preorder(p->Lson);
+        preorder(p->Rson);
+    }
+}
+
+void inorder(Bptr p) {
+    if (p != NULL) {
+        inorder(p->Lson);
+        printf("%d", p->data);
+        inorder(p->Rson);
+    }
+}
+
+void postorder(Bptr p) {
+    if (p != NULL) {
+        postorder(p->Lson);
+        postorder(p->Rson);
+        printf("%d", p->data);
+    }
+}

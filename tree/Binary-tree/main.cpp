@@ -108,6 +108,117 @@ void DispBtree(BTNode *b) {
     }
 }
 
+//二叉树的先序遍历递归算法
+void PreOrder(BTNode *b) {
+    if (b != NULL) {
+        printf("%d", b->data);
+        PreOrder(b->lchild);
+        PreOrder(b->rchild);
+    }
+}
+
+//二叉树先序遍历非递归算法
+void PreOrder1(BTNode *b) {
+    BTNode *St[MaxSize], *p;
+    int top = -1;
+    if (b != NULL) {
+        top++;
+        St[top] = b;
+        while (top > -1) {
+            p = St[top];
+            top--;
+            printf("%c", p->data);
+            if (p->rchild != NULL) {
+                top++;
+                St[top] = p->rchild;
+            }
+            if (p->lchild != NULL) {
+                top++;
+                St[top] = p->lchild;
+            }
+        }
+        printf("\n");
+    }
+};
+
+//二叉树的中序遍历递归算法
+void InOrder(BTNode *b) {
+    if (b != NULL) {
+        PreOrder(b->lchild);
+        printf("%d", b->data);
+        PreOrder(b->rchild);
+    }
+};
+
+//二叉树中序遍历非递归算法
+void InOrder1(BTNode *b) {
+    BTNode *St[MaxSize], *p;
+    int top = -1;
+    if (b != NULL) {
+        p = b;
+        while (top > -1 || p != NULL) {
+            while (p != NULL) {
+                top++;
+                St[top] = p;
+                p = p->lchild;
+            }
+            if (top > -1) {
+                p = St[top];
+                top--;
+                printf("%c", p->data);
+            }
+        }
+        printf("\n");
+    }
+};
+
+//二叉树的后序遍历递归算法
+void PostOrder(BTNode *b) {
+    if (b != NULL) {
+        PreOrder(b->lchild);
+        PreOrder(b->rchild);
+        printf("%d", b->data);
+
+    }
+};
+
+//二叉树后序遍历非递归算法
+void PostOrder1(BTNode *b) {
+    BTNode *St[MaxSize];
+    BTNode *p;
+    int top = -1;
+    bool flag;
+    if (b != NULL) {
+        do {
+            while (b != NULL) {
+                top++;
+                St[top] = b;
+                b = b->lchild;
+            }
+            p = NULL;
+            flag = true;
+            while (top != -1 && flag) {
+                b = St[top];
+                if (b->rchild == p) {
+                    printf("%c ", b->data);
+                    top--;
+                    p = b;
+                } else {
+                    b = b->rchild;
+                    flag = false;
+                }
+            }
+        } while (top != -1);
+        printf("\n");
+    }
+}
+
+void TraveLevel(BTNode *b) {
+    BTNode *Qu[MaxSize];
+    int front, rear;
+    front = rear = 0;
+}
+
 int main() {
     BTNode *b;
     CreateBTree(b, "A(B(D(,G)),G)),C(E,F))");
